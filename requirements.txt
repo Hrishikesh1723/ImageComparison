@@ -1,0 +1,7 @@
+flask
+cv2
+numpy
+win32api
+scikit-learn
+scipy
+base64
