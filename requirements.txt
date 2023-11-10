@@ -1,5 +1,5 @@
 flask
-cv2
+openCV
 numpy
 win32api
 scikit-learn
