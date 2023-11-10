@@ -1,6 +1,5 @@
---upgrade pip
 flask
-opencv
+opencv-python
 numpy
 win32api
 scikit-learn
