@@ -1,7 +1,6 @@
 flask
 opencv-python
 numpy
-pywin32
 scikit-learn
 scipy
 base64
