@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import cv2
 import numpy as np
-from win32api import GetSystemMetrics
+import ctypes
 from sklearn.cluster import KMeans
 from scipy.stats import wasserstein_distance
 import base64
@@ -102,7 +102,6 @@ def compare_images():
     image_n2 = np.frombuffer(base64_bytes, dtype=np.uint8)
     image2 = cv2.imdecode(image_n2, cv2.IMREAD_COLOR)
 
-
     # Perform image comparison using SIFT and homography
     reslut = process_images(image1, image2)
 
@@ -115,6 +114,11 @@ def compare_images():
     # Return the response
     return jsonify(response_data), 200
 
+def get_system_metrics(metric):
+    # Using ctypes to call GetSystemMetrics
+    user32 = ctypes.windll.user32
+    return user32.GetSystemMetrics(metric)
+
 def decode_base64_image(base64_string):
     base64_bytes = base64.b64decode(base64_string)
     image = np.frombuffer(base64_bytes, dtype=np.uint8)
@@ -123,7 +127,7 @@ def decode_base64_image(base64_string):
 
 def process_images(image1, image2):
     # Resize images to a consistent size
-    screen_height = GetSystemMetrics(1)
+    screen_height = get_system_metrics(1)
     max_height = int(0.8 * screen_height)
     scaling_factor = max_height / max(image1.shape[0], image2.shape[0])
     image1 = cv2.resize(image1, (0, 0), fx=scaling_factor, fy=scaling_factor)
