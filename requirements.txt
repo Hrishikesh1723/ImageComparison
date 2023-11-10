@@ -4,4 +4,5 @@ numpy
 scikit-learn
 scipy
 pybase64
+pypiwin32
 gunicorn
